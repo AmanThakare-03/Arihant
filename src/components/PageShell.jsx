@@ -9,7 +9,7 @@ import Footer from "./Footer.jsx";
 function Hero({ data }) {
   return (
     <div
-      className="px-6 md:px-10 py-8 grid gap-8"
+      className="product-hero px-4 sm:px-6 md:px-10 py-8 grid gap-8"
       style={{ gridTemplateColumns: "minmax(0,1.15fr) minmax(0,1fr)", maxWidth: 1180, margin: "0 auto" }}
     >
       <div>
@@ -84,7 +84,7 @@ function SectionHeading({ children }) {
 function OverviewAndSpecs({ data }) {
   return (
     <div
-      className="px-6 md:px-10 py-8 grid gap-10"
+      className="overview-specs px-4 sm:px-6 md:px-10 py-8 grid gap-10"
       style={{ gridTemplateColumns: "minmax(0,1fr) 300px", borderTop: `1px solid ${C.border}`, maxWidth: 1180, margin: "0 auto" }}
     >
       <div>
@@ -101,14 +101,14 @@ function OverviewAndSpecs({ data }) {
             {data.techSpecs.map((row, i) => (
               <div
                 key={i}
-                className="grid grid-cols-2"
+                className="tech-spec-row grid grid-cols-2"
                 style={{ borderBottom: i < data.techSpecs.length - 1 ? `1px solid ${C.border}` : "none", background: i % 2 ? C.offwhite : "#fff" }}
               >
-                <div className="flex justify-between px-4 py-3" style={{ borderRight: `1px solid ${C.border}` }}>
+                <div className="tech-spec-cell flex justify-between px-4 py-3" style={{ borderRight: `1px solid ${C.border}` }}>
                   <span style={{ color: C.mutedLight, fontSize: 13 }}>{row[0]}</span>
                   <span style={{ color: C.navy, fontWeight: 700, fontSize: 13, textAlign: "right" }}>{row[1]}</span>
                 </div>
-                <div className="flex justify-between px-4 py-3">
+                <div className="tech-spec-cell flex justify-between px-4 py-3">
                   <span style={{ color: C.mutedLight, fontSize: 13 }}>{row[2]}</span>
                   <span style={{ color: C.navy, fontWeight: 700, fontSize: 13, textAlign: "right" }}>{row[3]}</span>
                 </div>
@@ -159,7 +159,7 @@ function ModelsGrid({ data }) {
   const colors = [C.green, "#8a5a2f", "#5c6b7a", "#2d6b8a"];
   return (
     <div className="py-10" style={{ background: C.offwhite, borderTop: `1px solid ${C.border}` }}>
-      <div className="px-6 md:px-10 flex items-center justify-between mb-5" style={{ maxWidth: 1180, margin: "0 auto" }}>
+      <div className="px-4 sm:px-6 md:px-10 flex items-center justify-between mb-5" style={{ maxWidth: 1180, margin: "0 auto" }}>
         <h2 style={{ color: C.navy, fontWeight: 800, fontSize: 22 }}>{data.modelsSub}</h2>
         <div className="flex gap-2">
           <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ border: `1px solid ${C.border}`, background: "#fff" }}>
@@ -170,7 +170,7 @@ function ModelsGrid({ data }) {
           </button>
         </div>
       </div>
-      <div className="px-6 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-5" style={{ maxWidth: 1180, margin: "0 auto" }}>
+      <div className="px-4 sm:px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5" style={{ maxWidth: 1180, margin: "0 auto" }}>
         {data.models.map((m, i) => {
           const card = (
             <div className="rounded-lg overflow-hidden h-full" style={{ background: "#fff", border: `1px solid ${C.border}` }}>

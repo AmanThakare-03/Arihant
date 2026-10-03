@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Search, ChevronDown } from "lucide-react";
+import { Search, ChevronDown, Menu, X } from "lucide-react";
 import { C } from "../theme.js";
 import { ROUTES } from "../routes.js";
 
@@ -32,6 +32,8 @@ const PRODUCT_MENU = [
  */
 export default function Nav({ activeProduct = "", activeLink = "Home" }) {
   const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const navigate = useNavigate();
   const links = ["Home", "Services", "Products", "Our Projects", "About Us", "Contact Us"];
 
@@ -44,7 +46,7 @@ export default function Nav({ activeProduct = "", activeLink = "Home" }) {
 
   return (
     <nav
-      className="flex items-center justify-between px-6 py-3 flex-wrap gap-3"
+      className="site-nav flex items-center justify-between px-4 sm:px-6 py-3 gap-3"
       style={{ borderBottom: `1px solid ${C.border}`, maxWidth: 1180, margin: "0 auto", position: "relative" }}
     >
       <Link to={ROUTES.home} className="flex items-center gap-2" style={{ textDecoration: "none" }}>
@@ -57,7 +59,7 @@ export default function Nav({ activeProduct = "", activeLink = "Home" }) {
         </div>
       </Link>
 
-      <ul className="flex items-center gap-6 list-none text-sm" style={{ color: C.text, margin: 0, padding: 0 }}>
+      <ul className="desktop-nav flex items-center gap-6 list-none text-sm" style={{ color: C.text, margin: 0, padding: 0 }}>
         {links.map((l) => {
           const isProducts = l === "Products";
           const isActive = l === activeLink;
@@ -149,7 +151,7 @@ export default function Nav({ activeProduct = "", activeLink = "Home" }) {
         })}
       </ul>
 
-      <div className="flex items-center gap-3">
+      <div className="desktop-actions flex items-center gap-3">
         <div
           className="hidden md:flex items-center gap-2 px-3 py-2 rounded"
           style={{ background: C.offwhite, border: `1px solid ${C.border}`, minWidth: 200 }}
@@ -165,6 +167,70 @@ export default function Nav({ activeProduct = "", activeLink = "Home" }) {
           REQUEST QUOTE
         </button>
       </div>
+
+      <button
+        type="button"
+        className="mobile-menu-button"
+        onClick={() => setMobileOpen((v) => !v)}
+        aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={mobileOpen}
+      >
+        {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+      </button>
+
+      {mobileOpen && (
+        <div className="mobile-nav-panel">
+          {links.map((l) => {
+            const isProducts = l === "Products";
+            const to = linkTo(l);
+            return (
+              <div key={l} className="mobile-nav-item">
+                {isProducts ? (
+                  <>
+                    <button
+                      type="button"
+                      className="mobile-products-toggle"
+                      onClick={() => setMobileProductsOpen((v) => !v)}
+                      aria-expanded={mobileProductsOpen}
+                    >
+                      <span>PRODUCTS</span>
+                      <ChevronDown
+                        size={16}
+                        style={{ transform: mobileProductsOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform .2s ease" }}
+                      />
+                    </button>
+                    {mobileProductsOpen && (
+                      <div className="mobile-product-menu">
+                        {PRODUCT_MENU.flatMap((group) => group.items).map((p) => (
+                          <Link
+                            key={p.key}
+                            to={p.to}
+                            onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                          >
+                            {p.label}
+                          </Link>
+                        ))}
+                        <Link
+                          to={ROUTES.products}
+                          onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}
+                          className="mobile-view-all-products"
+                        >
+                          VIEW ALL PRODUCTS →
+                        </Link>
+                      </div>
+                    )}
+                  </>
+                ) : to ? (
+                  <Link to={to} onClick={() => { setMobileOpen(false); setMobileProductsOpen(false); }}>{l.toUpperCase()}</Link>
+                ) : (
+                  <span>{l.toUpperCase()}</span>
+                )}
+              </div>
+            );
+          })}
+          <button onClick={() => { setMobileOpen(false); navigate(ROUTES.contact); }} className="mobile-quote-button">REQUEST QUOTE</button>
+        </div>
+      )}
     </nav>
   );
 }

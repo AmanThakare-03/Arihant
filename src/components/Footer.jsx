@@ -26,8 +26,8 @@ function FooterCol({ title, items }) {
 
 export default function Footer() {
   return (
-    <footer style={{ background: C.navy, color: "#c6d0d9" }} className="px-6 md:px-10 pt-12 pb-6">
-      <div className="grid gap-8" style={{ gridTemplateColumns: "1.3fr 1fr 1fr 1fr", maxWidth: 1180, margin: "0 auto" }}>
+    <footer style={{ background: C.navy, color: "#c6d0d9" }} className="px-4 sm:px-6 md:px-10 pt-12 pb-6">
+      <div className="footer-grid grid gap-8" style={{ maxWidth: 1180, margin: "0 auto" }}>
         <div>
           <Link to={ROUTES.home} className="flex items-center gap-2 mb-3" style={{ textDecoration: "none" }}>
             <div className="w-8 h-8 rounded flex items-center justify-center bg-white">
